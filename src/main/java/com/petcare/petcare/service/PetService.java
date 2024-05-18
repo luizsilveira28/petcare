@@ -19,37 +19,59 @@ public class PetService {
         return petRepository.findAll();
     }
 
-
-
-    public Pet atualizarPet(Long id, Pet petAtualizado){
+    public Pet atualizarPet(Long id, Pet petAtualizado) {
         Pet petExistente = petRepository.findById(id).orElse(null);
 
-        if(petExistente == null){
-                throw new EntityNotFoundException("Pet não encontrado com ID: " + id); 
+        if (petExistente == null) {
+            throw new EntityNotFoundException("Pet não encontrado com ID: " + id);
         }
 
-        petExistente.setNome(petAtualizado.getNome());
-        petExistente.setEspecie(petAtualizado.getEspecie());
-        petExistente.setCor(petAtualizado.getCor());
-        petExistente.setIdade(petAtualizado.getIdade());
+        if (petAtualizado.getNome() != null){
+            petExistente.setNome(petAtualizado.getNome());
+        }
 
+        if (petAtualizado.getCor() != null){
+            petExistente.setCor(petAtualizado.getCor());
+        }
+
+        if (petAtualizado.getEspecie() != null){
+            petExistente.setEspecie(petAtualizado.getEspecie());
+        }
+
+        if (petAtualizado.getIdade() != 0 && petAtualizado.getIdade() != petExistente.getIdade()) {
+            petExistente.setIdade(petAtualizado.getIdade());
+        }
+        
         return petRepository.save(petExistente);
     }
 
-    public Pet existePet(Long id){
+    public Pet existePet(Long id) {
         Pet pet = petRepository.findById(id).orElse(null);
 
         return pet;
     }
 
-    public void excluirPet(Long id){
+    public void excluirPet(Long id) {
         Pet pet = petRepository.findById(id).orElse(null);
-        if(pet == null){
-            throw new EntityNotFoundException("Ped não encontrado com ID: " + id);
+        if (pet == null) {
+            throw new EntityNotFoundException("Pet não encontrado com ID: " + id);
         }
 
         petRepository.delete(pet);
     }
-    
+
+    public Pet criarPet(Pet pet) {
+        Pet novoPet = petRepository.save(pet);
+        return novoPet;
+    }
+
+    public Pet listarPet(Long id){
+        Pet pet = petRepository.findById(id).orElse(null);
+        if (pet == null){
+            throw new EntityNotFoundException("Pet não encontrado com ID: " + id);
+        }
+
+        return pet;
+    }
 
 }

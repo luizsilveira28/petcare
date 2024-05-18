@@ -16,7 +16,14 @@ import jakarta.persistence.Id;
         private int idade;
         private String cor;
 
-        public void Pet(){
+        public Pet(String nome, String especie, int idade, String cor) {
+            this.nome = nome;
+            this.especie = especie;
+            this.idade = idade;
+            this.cor = cor;
+        }
+
+        public Pet(){
 
         }
 
