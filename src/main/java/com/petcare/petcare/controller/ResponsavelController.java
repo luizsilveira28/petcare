@@ -2,7 +2,6 @@ package com.petcare.petcare.controller;
 
 import com.petcare.petcare.service.ResponsavelService;
 import com.petcare.petcare.model.Responsavel;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;

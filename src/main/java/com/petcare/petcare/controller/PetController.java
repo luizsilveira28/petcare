@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.petcare.petcare.model.Pet;
+import com.petcare.petcare.model.Responsavel;
 import com.petcare.petcare.service.PetService;
+import com.petcare.petcare.service.ResponsavelService;
 
 import java.util.List;
 
 @RestController
 public class PetController {
+
+    @Autowired
+    private ResponsavelService responsavelService; // Injeção do serviço ResponsavelService
 
     @Autowired
     private PetService petService;
@@ -32,8 +37,18 @@ public class PetController {
         return ResponseEntity.ok(pet);
     }
 
-    @PostMapping("/pets/incluirpet/")
+    @PostMapping("/pets/incluirpet")
     public ResponseEntity<Pet> criarPet(@RequestBody Pet pet) {
+        // Verifica se o ID do responsável está presente
+        if (pet.getResponsavel() == null || pet.getResponsavel().getId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        // Verifica se o responsável existe
+        Responsavel responsavel = responsavelService.existeResponsavel(pet.getResponsavel().getId());
+        if (responsavel == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        pet.setResponsavel(responsavel); // Associa o responsável ao pet
         Pet novoPet = petService.criarPet(pet);
         return new ResponseEntity<>(novoPet, HttpStatus.CREATED);
     }

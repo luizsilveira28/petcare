@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Pet {
@@ -16,6 +17,18 @@ public class Pet {
     private String especie;
     private int idade;
     private String cor;
+
+    @ManyToOne
+    @JoinColumn(name = "responsavel_id")
+    private Responsavel responsavel; // Relacionamento com o Responsável
+
+    public Responsavel getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Responsavel responsavel) {
+        this.responsavel = responsavel;
+    }
 
     public Pet() {}
 
