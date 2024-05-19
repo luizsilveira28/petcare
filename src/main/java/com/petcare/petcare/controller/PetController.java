@@ -2,7 +2,6 @@ package com.petcare.petcare.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.petcare.petcare.model.Pet;
 import com.petcare.petcare.service.PetService;
+
 import java.util.List;
 
 @RestController
@@ -27,15 +27,14 @@ public class PetController {
     }
 
     @GetMapping("/pets/consultarpet/{id}/")
-    public ResponseEntity<Pet> listarPet(@PathVariable Long id){
+    public ResponseEntity<Pet> listarPet(@PathVariable Long id) {
         Pet pet = petService.listarPet(id);
         return ResponseEntity.ok(pet);
     }
 
     @PostMapping("/pets/incluirpet/")
     public ResponseEntity<Pet> criarPet(@RequestBody Pet pet) {
-        Pet novoPet = petService.criarPet(pet); // Salvar o novo pet no banco de dados
-
+        Pet novoPet = petService.criarPet(pet);
         return new ResponseEntity<>(novoPet, HttpStatus.CREATED);
     }
 
