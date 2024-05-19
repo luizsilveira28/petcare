@@ -1,5 +1,8 @@
 package com.petcare.petcare.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,9 +21,11 @@ public class Pet {
     private int idade;
     private String cor;
 
+    // Relacionamento com Responsavel
     @ManyToOne
     @JoinColumn(name = "responsavel_id")
-    private Responsavel responsavel; // Relacionamento com o Responsável
+    @JsonIgnoreProperties("pets")
+    private Responsavel responsavel;
 
     public Responsavel getResponsavel() {
         return responsavel;
@@ -29,6 +34,7 @@ public class Pet {
     public void setResponsavel(Responsavel responsavel) {
         this.responsavel = responsavel;
     }
+    
 
     public Pet() {}
 

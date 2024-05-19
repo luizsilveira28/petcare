@@ -52,7 +52,7 @@ public class ResponsavelController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        ResponsavelService.delResponsavel(id);
+        ResponsavelService.excluirResponsavel(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
     }

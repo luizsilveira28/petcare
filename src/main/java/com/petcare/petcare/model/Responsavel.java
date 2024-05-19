@@ -1,9 +1,12 @@
 package com.petcare.petcare.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Responsavel {
@@ -26,6 +29,10 @@ public class Responsavel {
         this.telefone2 = telefone2;
         this.endereco = endereco;
     }
+
+    // Relacionamento um-para-muitos com Pet
+    @OneToMany(mappedBy = "responsavel")
+    private List<Pet> pets;
 
     public Long getId() {
         return id;
@@ -73,5 +80,13 @@ public class Responsavel {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 }

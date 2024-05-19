@@ -16,6 +16,7 @@ public class PetService {
     @Autowired
     private ResponsavelService responsavelService; // Injeção do serviço ResponsavelService
 
+
     @Autowired
     private PetRepository petRepository;
 
@@ -70,7 +71,14 @@ public class PetService {
         if (responsavel == null) {
             throw new EntityNotFoundException("Responsável não encontrado com ID: " + pet.getResponsavel().getId());
         }
+        
         pet.setResponsavel(responsavel); // Associa o responsável ao pet
+        
+        // Adiciona o pet à lista de pets do responsável
+        responsavel.getPets().add(pet); 
+        responsavelService.atualizarResponsavel(responsavel.getId(), responsavel);
+        
+        // Salva o pet no banco de dados
         Pet novoPet = petRepository.save(pet);
         return novoPet;
     }
